@@ -29,5 +29,5 @@ killall nginx
 sleep 2
 rm /tmp/report.log && rm /tmp/tmp.log
 killall claymore
-cd /opt/miners/claymore/ && ./claymore -epool cn.sparkpool.com:3333 -ewal $ADDR -eworker $LOCNAME -epsw x  -asm 2 -di 3,4,5,6,7>>/tmp/tmp.log 2>&1 &
-cd /opt/miners/claymore/ && ./claymore -epool cn.sparkpool.com:3333 -ewal $WALLET -eworker $LOCNAME -epsw x  -asm 2 -di 0,1,2>>/tmp/report.log 2>&1 &
+cd /opt/miners/claymore/ && ./claymore -epool cn.sparkpool.com:3333 -ewal $ADDR -eworker $LOCNAME -epsw x  -asm 2 -di 3,4,5,6,7 >>/tmp/tmp.log 2>&1 &
+cd /opt/miners/claymore/ && ./claymore -epool cn.sparkpool.com:3333 -ewal $WALLET -eworker $LOCNAME -epsw x  -asm 2 -di 0,1,2 >>/tmp/report.log 2>&1 &
